@@ -1,95 +1,63 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+'use client';
+import Image from 'next/image';
+import { useState } from 'react';
+import Navbar from './components/Navbar.js';
+import Body from './components/Body.js';
+import Add from './components/Add.js';
 
 export default function Home() {
+  const [todos, setTodos] = useState([
+    { id: 1, description: 'Complete Tutorial class', isCompleted: false },
+    { id: 2, description: 'Work on project 2', isCompleted: false },
+    { id: 3, description: 'Eat Fruits', isCompleted: true },
+  ]);
+  let completedTaskCount = 0;
+  let incompletedTaskCount = 0;
+  for (let a = 0; a < todos.length; a++) {
+    const element = todos[a];
+    element.isCompleted === true ? completedTaskCount++ : incompletedTaskCount++;
+  }
+  console.log(completedTaskCount, incompletedTaskCount);
+
+  function completeATodo(id) {
+    setTodos((prevTodo) => {
+      return prevTodo.map((todo) => {
+        return todo.id === id ? { ...todo, isCompleted: true } : todo;
+      });
+    });
+  }
+
+  function deleteATodo(id) {
+    setTodos((prevTodo) => {
+      return prevTodo.filter((todo) => {
+        return todo.id !== id;
+      });
+    });
+  }
+
+  function incompleteATodo(id) {
+    setTodos((prevTodo) => {
+      return prevTodo.map((todo) => {
+        return todo.id === id ? { ...todo, isCompleted: false } : todo;
+      });
+    });
+  }
+
+  function addTodo(text) {
+    setTodos((prevTodo) => {
+      return [...prevTodo, { id: prevTodo.length + 1, description: text, isCompleted: false }];
+    });
+  }
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+    <main>
+      <Navbar task={todos.length} completed={completedTaskCount} incomplete={incompletedTaskCount} />
+      <Body
+        todoInfo={todos}
+        handleCompleteClick={(id) => completeATodo(id)}
+        handleIncompleteClick={(id) => incompleteATodo(id)}
+        handleDeleteClick={(id) => deleteATodo(id)}
+      />
+      <Add addClick={(text) => addTodo(text)} />
     </main>
-  )
+  );
 }
