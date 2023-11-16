@@ -1,9 +1,9 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import Navbar from './components/Navbar.js';
-import Body from './components/Body.js';
-import Add from './components/Add.js';
+import Navbar from '../components/Navbar.js';
+import Body from '../components/Body.js';
+import Add from '../components/Add.js';
 
 export default function Home() {
   const [todos, setTodos] = useState([

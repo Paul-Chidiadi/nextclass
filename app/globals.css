@@ -8,6 +8,8 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  background-color: #2e2e2e;
+  /* position: relative; */
 }
 
 a {
@@ -63,4 +65,56 @@ a {
   height: 45px;
   width: 400px;
   padding: 10px;
+}
+
+/* GAME SECTION */
+.game-container {
+  width: 600px;
+  height: 500px;
+  border-radius: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 25px;
+  padding: 50px;
+  background-color: burlywood;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.game-container p {
+  width: 100%;
+  text-align: center;
+  font-size: 13px;
+  font-weight: bold;
+}
+.game-container button {
+  width: 100px;
+  color: white;
+  font-size: 13px;
+  font-weight: bold;
+  padding: 8px;
+  border-radius: 8px;
+  background-color: blue;
+}
+.game-container .dice-container {
+  width: 100%;
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 20px;
+}
+.die {
+  cursor: pointer;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 4px;
+  border-radius: 5px;
+  background-color: white;
+  box-shadow: 0px 5px 5px 4px rgba(0, 0, 0, 0.2);
 }
